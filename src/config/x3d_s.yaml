@@ -1,0 +1,126 @@
+# Copyright 2022 Huawei Technologies Co., Ltd
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ============================================================================
+
+# model architecture
+model_name: X3D-S
+
+# The dataset sink mode.
+dataset_sink_mode: False
+
+# Context settings.
+context:
+    mode: 0 #0--Graph Mode; 1--Pynative Mode
+    device_target: "GPU"
+
+# Model settings.
+model:
+    type: x3d_s
+    num_classes: 400
+    dropout_rate: 0.5
+    depth_factor: 2.2
+    num_frames: 13
+    train_crop_size: 160
+
+learning_rate:
+    lr_scheduler: "cosine_annealing"
+    lr: 0.1
+    eta_min: 0.0
+    t_max: 300
+    max_epoch: 300
+    warmup_epochs: 35
+
+optimizer:
+    type: 'SGD'
+    momentum: 0.9
+    # L2 regularization.
+    weight_decay: 0.00005
+
+loss:
+    type: SoftmaxCrossEntropyWithLogits
+    sparse: True
+    reduction: "mean"
+
+train:
+    pre_trained: False
+    pretrained_model: ""
+    ckpt_path: "./output/"
+    epochs: 100
+    save_checkpoint_epochs: 5
+    save_checkpoint_steps: 1875
+    keep_checkpoint_max: 10
+    run_distribute: False
+
+infer:
+    pretrained_model: "pretrianed_models/x3d_s_kinetics400.ckpt"
+
+# kinetic dataset config
+data_loader:
+    train:
+        dataset:
+              type: Kinetic400
+              path: "/home/publicfile/kinetics-400"
+              split: 'train'
+              seq: 13
+              seq_mode: 'interval'
+              num_parallel_workers: 8
+              shuffle: True
+              batch_size: 16
+              repeat_num: 1
+              frame_interval: 6
+
+        map:
+            operations:
+                - type: VideoShortEdgeResize
+                  size: 182
+                - type: VideoRandomCrop
+                  size: [160, 160]
+                - type: VideoRandomHorizontalFlip
+                  prob: 0.5
+                - type: VideoRescale
+                  shift: 0
+                - type: VideoReOrder
+                  order: [3, 0, 1, 2]
+                - type: VideoNormalize
+                  mean: [0.45, 0.45, 0.45]
+                  std: [0.225, 0.225, 0.225]
+            input_columns: ["video"]
+
+    eval:
+        dataset:
+            type: Kinetic400
+            path: "/home/publicfile/kinetics-400"
+            split: 'val'
+            seq: 13
+            seq_mode: 'interval'
+            num_parallel_workers: 4
+            shuffle: False
+            batch_size: 8
+            repeat_num: 1
+            frame_interval: 6
+        map:
+            operations:
+                - type: VideoShortEdgeResize
+                  size: 182
+                - type: VideoCenterCrop
+                  size: [182, 182]
+                - type: VideoRescale
+                  shift: 0
+                - type: VideoReOrder
+                  order: [3, 0, 1, 2]
+                - type: VideoNormalize
+                  mean: [0.45, 0.45, 0.45]
+                  std: [0.225, 0.225, 0.225]
+            input_columns: ["video"]
+    group_size: 1
