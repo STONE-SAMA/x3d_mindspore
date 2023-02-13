@@ -13,6 +13,8 @@
     - [Distributed Training](#distributed-training)
   - [Evaluation Process](#evaluation-process)
   - [Model Description](#model-description)
+  - [Result](#result)
+  - [Benchmark](#benchmark)
   - [Citation](#citation)
 
 ## Description
@@ -441,7 +443,21 @@ eval: 2484/2484
 | Config               | [src/config/x3d_XS](src/config/x3d_xs.yaml) | [src/config/x3d_S](src/config/x3d_s.yaml) | [src/config/x3d_M](src/config/x3d_m.yaml) | [src/config/x3d_L](src/config/x3d_l.yaml) |
 | Pretrained Model     | [x3d_XS_kinetics400.ckpt](https://zjuteducn-my.sharepoint.com/:u:/g/personal/201906010313_zjut_edu_cn/EYwLbhrIcCdIor3J_Dxj3foBMx2bFb7zcw9QRVBkamZE_A?e=p4tDBt) | [x3d_S_kinetics400.ckpt](https://zjuteducn-my.sharepoint.com/:u:/g/personal/201906010313_zjut_edu_cn/EUH1YqWCkLlLlEMA9A8MuwQBSPQ0yjyUJVUIlsuWbP3YeQ?e=WK955U) | [x3d_M_kinetics400.ckpt](https://zjuteducn-my.sharepoint.com/:u:/g/personal/201906010313_zjut_edu_cn/EVqLWmg7v4JBkLJPY3vP-1kBeq7uI5sE2Tin7kM5PcxQMw?e=S1wCy0) | [x3d_L_kinetics400.ckpt](https://zjuteducn-my.sharepoint.com/:u:/g/personal/201906010313_zjut_edu_cn/EaVbGiHvrf5Nl6TooLlq340B4LMrLF8Cqm9PH0w9Mlqx9Q?e=a2XEoh) |
 
+## Result
 
+![result](./src/pictures/video.gif)
+
+| Version | X3D-XS | X3D-S | X3D-M | X3D-L |
+| :-----: | :----: | :---: | :---: | :---: |
+| Pytorch(Top1) | 68.6% | 72.9% | 74.6% | 76.8% |
+| Mindspore(Top1) | 67.1% | 71.6% | 74.6% | 75.2% |
+| Pytorch(Top5) | 87.9% | 90.5% | 91.7% | 92.5% |
+| Mindspore(Top5) | 87.9% | 90.7% | 92.0% | 92.4% |
+
+
+## Benchmark
+
+![benchmark](./src/pictures/x3d_pno.png)
 
 ## Citation
 
