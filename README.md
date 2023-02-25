@@ -445,19 +445,21 @@ eval: 2484/2484
 
 ## Result
 
-![result](./src/pictures/video.gif)
-
 | Version | X3D-XS | X3D-S | X3D-M | X3D-L |
 | :-----: | :----: | :---: | :---: | :---: |
-| Pytorch(Top1) | 68.6% | 72.9% | 74.6% | 76.8% |
-| Mindspore(Top1) | 67.1% | 71.6% | 74.6% | 75.2% |
-| Pytorch(Top5) | 87.9% | 90.5% | 91.7% | 92.5% |
-| Mindspore(Top5) | 87.9% | 90.7% | 92.0% | 92.4% |
+| Top1 | 67.1% | 71.6% | 74.6% | 75.2% |
+| Top5 | 87.9% | 90.7% | 92.0% | 92.4% |
 
+![result](./src/pictures/video.gif)
 
 ## Benchmark
 
-![benchmark](./src/pictures/x3d_pno.png)
+| Version | Pytorch(Top1) | Mindspore(Top1) | Pytorch(Top5) | Mindspore(Top5) |
+| :-----: | :----: | :---: | :---: | :---: |
+| X3D-XS | 68.6% | 67.1% | 87.9% | 87.9% |
+| X3D-S | 72.9% | 71.6% | 90.5% | 90.7% |
+| X3D-M | 74.6% | 74.6% | 91.7% | 92.0% |
+| X3D-L | 76.8% | 75.2% | 92.5% | 92.4% |
 
 ## Citation
 
